@@ -1,0 +1,23 @@
+#:kivy 1.6.0
+<TtsDemo>:
+    orientation: 'vertical'
+    saywhat_text: saywhat_text
+    Label:
+        text: 'Kivy TTS Demo'
+        font_size: '45sp'
+        size_hint: 1, None
+    TextInput:
+        id: saywhat_text
+        text: 'Hello, world!'
+        multiline: True
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint: 1, None
+        Button:
+            text: 'Say it!'
+            size_hint: 1, None
+            on_press: root.say_something(saywhat_text.text)
+        Button:
+            text: 'Clear'
+            size_hint: 1, None
+            on_press: root.clear()
