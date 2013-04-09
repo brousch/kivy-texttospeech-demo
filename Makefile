@@ -95,6 +95,7 @@ clone_python_for_android:
 package_android:
 	cd $(PYTHON_FOR_ANDROID_PACKAGE); \
 	$(PY) ./build.py --package $(APK_PACKAGE) --name $(APP_NAME) --version $(APK_VERSION) --orientation $(APK_ORIENTATION) --icon $(APK_ICON) --presplash $(APK_PRESPLASH) --dir $(PROJECT_DIR) debug
+	cp $(APK_DEBUG) binaries/
 
 .PHONY: package_android_release
 package_android_release:
