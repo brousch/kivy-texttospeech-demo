@@ -1,0 +1,19 @@
+#:kivy 1.6.0
+<TtsDemo>:
+    orientation: 'vertical'
+    Label:
+        text: 'Kivy TTS Demo'
+        font_size: '45sp'
+        size_hint: 1, None
+    TextInput:
+        text: 'Hello, world!'
+        multiline: True
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint: 1, None
+        Button:
+            text: 'Say it!'
+            size_hint: 1, None
+        Button:
+            text: 'Clear'
+            size_hint: 1, None

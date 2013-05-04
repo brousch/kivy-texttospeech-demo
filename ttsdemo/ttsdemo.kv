@@ -2,6 +2,13 @@
 <TtsDemo>:
     orientation: 'vertical'
     saywhat_text: saywhat_text
+    padding: root.width * 0.02, root.height * 0.02
+    spacing: 10
+    canvas:
+        Rectangle:
+            source: 'images/background.png'
+            pos: self.pos
+            size: self.size
     Label:
         text: 'Kivy TTS Demo'
         font_size: '45sp'

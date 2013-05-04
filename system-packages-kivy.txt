@@ -8,3 +8,4 @@ python-gst0.10
 gstreamer0.10-plugins-good
 libgl1-mesa-dev
 libgles2-mesa-dev
+ant

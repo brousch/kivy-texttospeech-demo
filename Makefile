@@ -37,7 +37,7 @@ run:
 .PHONY: inspect
 inspect:
 	cd $(PROJECT_DIR); \
-	python main.py -m inspect
+	$(PY) main.py -m inspector
 
 
 # Setup
