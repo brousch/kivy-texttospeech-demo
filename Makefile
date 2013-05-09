@@ -14,8 +14,8 @@ PY4A_MODULES := "kivy"
 APK_PACKAGE := net.clusterbleep.kivyttsdemo
 APP_NAME := "Kivy Text To Speech Demo"
 APK_NAME := KivyTextToSpeechDemo
-APK_VERSION := 0.1
-APK_ORIENTATION := portrait
+APK_VERSION := 0.2
+APK_ORIENTATION := sensor
 APK_ICON := $(PROJECT_DIR)/resources/icon.png
 APK_PRESPLASH := $(PROJECT_DIR)/resources/presplash.jpg
 APK_DEBUG := $(PYTHON_FOR_ANDROID_PACKAGE)/bin/$(APK_NAME)-$(APK_VERSION)-debug.apk
@@ -51,6 +51,7 @@ install_system_packages:
 
 .PHONY: create_virtualenv
 create_virtualenv:
+	rm -rf $(VENV)
 	virtualenv -p python2.7 --system-site-packages $(VENV)
 
 .PHONY: initialize_virtualenv
@@ -66,12 +67,13 @@ install_kivy_dev:
 
 .PHONY: install_python_for_android
 install_python_for_android:
+	rm -rf $(PYTHON_FOR_ANDROID)
 	git clone https://github.com/kivy/python-for-android.git
 
 .PHONY: create_python_for_android_distribution
 create_python_for_android_distribution:
 	rm -rf $(PYTHON_FOR_ANDROID)/dist
-	source $(VENV)/bin/activate; \
+	. $(VENV)/bin/activate; \
 	cd $(PYTHON_FOR_ANDROID); \
 	./distribute.sh -m $(PY4A_MODULES)
 
@@ -84,7 +86,7 @@ refresh: install_cython install_kivy_dev refresh_python_for_android
 refresh_python_for_android: update_python_for_android create_python_for_android_distribution
 
 .PHONY: update_python_for_android
-clone_python_for_android:
+update_python_for_android:
 	cd $(PYTHON_FOR_ANDROID); \
 	git clean -dxf; \
 	git pull
@@ -95,13 +97,16 @@ clone_python_for_android:
 package_android:
 	cd $(PYTHON_FOR_ANDROID_PACKAGE); \
 	$(PY) ./build.py --package $(APK_PACKAGE) --name $(APP_NAME) --version $(APK_VERSION) --orientation $(APK_ORIENTATION) --icon $(APK_ICON) --presplash $(APK_PRESPLASH) --dir $(PROJECT_DIR) debug
-	cp $(APK_DEBUG) binaries/
+	mkdir -p $(WD)/binaries
+	cp $(APK_DEBUG) $(WD)/binaries/
 
 .PHONY: package_android_release
 package_android_release:
 	cd $(PYTHON_FOR_ANDROID_PACKAGE); \
 	$(PY) ./build.py --package $(APK_PACKAGE) --name $(APP_NAME) --version $(APK_VERSION) --orientation $(APK_ORIENTATION) --icon $(APK_ICON) --presplash $(APK_PRESPLASH) --dir $(PROJECT_DIR) release
 	make sign_android
+	mkdir -p $(WD)/binaries
+	cp $(APK_FINAL) $(WD)/binaries/
 
 .PHONY: sign_android
 sign_android:
